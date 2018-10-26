@@ -15,3 +15,4 @@ class TestBasics(unittest.TestCase):
     def test_div(self):
         result = rpn.calculate("8 4 /")
         self.assertEqual(2, result)
+       
