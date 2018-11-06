@@ -1,36 +1,36 @@
-#!/usr/bin/env python
+#!/usr/bin/env python3
 
-def calculate(arg):
+import operator
 
-    # stack for calc
-    stack = []
-    # tokeniize input
-    tokens = arg.split()
-    # process tokens
 
-    for token in tokens:
+operators = {
+    '+': operator.add,
+    '-': operator.sub,
+    '*': operator.mul,
+    '/': operator.truediv,
+}
+
+def calculate(myarg):
+    stack = list()
+    for token in myarg.split():
         try:
-            value = int(token)
-            stack.append(value)
+            token = int(token)
+            stack.append(token)
         except ValueError:
-            val1 = stack.pop()
-            val2 = stack.pop()
-            if token == '+':
-                result = val1 + val2
-            elif token == '-':
-                result  =val1 - val2
-            elif token == '*':
-                result  =val1 * val2
-            elif token == '/':
-                result  =val1 / val2                
-
+            function = operators[token]
+            arg2 = stack.pop()
+            arg1 = stack.pop()
+            result = function(arg1, arg2)
             stack.append(result)
-            return stack[0]
+        print(stack)
+    if len(stack) != 1:
+        raise TypeError("Too many parameters")
+    return stack.pop()
 
 def main():
     while True:
         result = calculate(input("rpn calc> "))
-        print(result)
+        print("Result: ", result)
 
-if __name__ == '__main__': # Note: that's "underscore underscore n a m e ..."
+if __name__ == '__main__':
     main()
